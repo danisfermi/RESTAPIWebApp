@@ -15,18 +15,18 @@ def get_contacts():
 
 # Memory Database
 # JSON Formatted. Fields are:-
-#					+Name (string)
-# 				+Mail (string)
+#			+Name (string)
+# 			+Mail (string)
 contacts = [
-							{
-								'name': 'Danis',
-								'mail': 'dfermi@ncsu.edu'
-							},
-							{
-								'name': 'Rohit',
-								'mail': 'rnambis@ncsu.edu'
-							}
-						]
+		{
+			'name': 'Danis',
+			'mail': 'dfermi@ncsu.edu'
+		},
+		{
+			'name': 'Rohit',
+			'mail': 'rnambis@ncsu.edu'
+		}
+	]
 
 if __name__ == '__main__':
 	app.run(debug=True)
