@@ -1,6 +1,9 @@
 #!/usr/bin/python
-from flask import Flask, jsonify
-from flask import abort, make_response
+from flask import Flask
+from flask import jsonify
+from flask import request
+from flask import make_response
+from flask import abort
 
 app = Flask(__name__)
 
@@ -20,7 +23,18 @@ def get_contact(id):
 	contact = [contact for contact in contacts if contact['id'] == id]
 	if len(contact) == 0:
 		abort(404)
-	return jsonify({'contact': contact})
+	return jsonify({'Contact': contact})
+
+# Post Request
+@app.route('/contacts', methods=['POST'])
+def create_contact():
+	contact = {
+						'id'  : request.form['id'],
+						'name': request.form['name'],
+						'mail': request.form['mail']
+						}
+	contacts.append(contact)
+	return jsonify({'Contact': contact}), 201
 
 # Error Handler to convert Error 404 to JSON
 @app.errorhandler(404)
