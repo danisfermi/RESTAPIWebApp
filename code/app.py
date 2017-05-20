@@ -1,5 +1,5 @@
 #!/usr/bin/python
-from flask import Flask
+from flask import Flask, jsonify
 from flask import abort, make_response
 
 app = Flask(__name__)
@@ -15,9 +15,9 @@ def get_contacts():
 	return jsonify({'contacts':contacts})
 
 # Name Based Get Request
-@app.route('/contacts/<string:name>', methods = ['GET'])
-def get_contact(name):
-	contact = [contact for contact in contacts if contact[name] == name]
+@app.route('/contacts/<int:id>', methods = ['GET'])
+def get_contact(id):
+	contact = [contact for contact in contacts if contact['id'] == id]
 	if len(contact) == 0:
 		abort(404)
 	return jsonify({'contact': contact})
@@ -29,14 +29,17 @@ def not_found(error):
 
 # Memory Database
 # JSON Formatted. Fields are:-
+#			+Id (int)
 #			+Name (string)
 # 			+Mail (string)
 contacts = [
 		{
+			'id'  :  1, 
 			'name': 'Danis',
 			'mail': 'dfermi@ncsu.edu'
 		},
 		{
+			'id'  :  2,
 			'name': 'Rohit',
 			'mail': 'rnambis@ncsu.edu'
 		}
