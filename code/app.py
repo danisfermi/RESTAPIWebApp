@@ -15,7 +15,7 @@ def index():
 # Base GET Request
 @app.route('/contacts', methods = ['GET'])
 def get_contacts():
-	return jsonify({'contacts':contacts})
+	return jsonify({'Contacts': contacts})
 
 # Name Based Get Request
 @app.route('/contacts/<int:id>', methods = ['GET'])
@@ -36,7 +36,7 @@ def create_contact():
 		}
 	else:                                                                # Handler for form based PUT Request
 		contact = {
-				'id'  : request.form['id'],
+				'id'  : contacts[-1]['id'] + 1,
 				'name': request.form['name'],
 				'mail': request.form['mail']
 			}
@@ -44,7 +44,15 @@ def create_contact():
 	return jsonify({'Contact': contact}), 201
 
 # PUT Request
-# To be completed
+@app.route('/contacts/<int:id>', methods=['PUT'])
+def update_contact(id):
+	contact = [contact for contact in contacts if contact['id'] == id]
+	if len(contact) == 0:
+		abort(404)
+	if request.json:
+		contacts[id]['name'] = request.json.get('name',contact[0]['name'])
+		contacts[id]['mail'] = request.json.get('mail',contact[0]['mail'])
+	return jsonify({'Contact': contacts[id]})
 
 # DELETE Request
 @app.route('/contacts/<int:id>', methods=['DELETE'])
@@ -52,7 +60,7 @@ def delete_contact(id):
 	contact = [contact for contact in contacts if contact['id'] == id]
 	if len(contact) == 0:
 		abort(404)
-	contacts.remove(contact)
+	contacts.remove(contact[0])
 	return jsonify({'Result': True})
 
 # Error Handler to convert Error 404 to JSON
