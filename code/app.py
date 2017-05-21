@@ -34,7 +34,7 @@ def create_contact():
 			'name': request.json['name'],
 			'mail': request.json['mail']
 		}
-	else:                                                                # Handler for form based PUT Request
+	else:                                       # Handler for form based PUT Request
 		contact = {
 				'id'  : contacts[-1]['id'] + 1,
 				'name': request.form['name'],
@@ -49,10 +49,10 @@ def update_contact(id):
 	contact = [contact for contact in contacts if contact['id'] == id]
 	if len(contact) == 0:
 		abort(404)
-	if request.json:
-		contacts[id]['name'] = request.json.get('name',contact[0]['name'])
-		contacts[id]['mail'] = request.json.get('mail',contact[0]['mail'])
-	return jsonify({'Contact': contacts[id]})
+	if request.json:                           # Handler for JSON PUT Request  
+		contact[0]['name'] = request.json.get('name',contact[0]['name'])
+		contact[0]['mail'] = request.json.get('mail',contact[0]['mail'])
+	return jsonify({'Contact': contact[0]})
 
 # DELETE Request
 @app.route('/contacts/<int:id>', methods=['DELETE'])
