@@ -28,13 +28,32 @@ def get_contact(id):
 # Post Request
 @app.route('/contacts', methods=['POST'])
 def create_contact():
-	contact = {
-						'id'  : request.form['id'],
-						'name': request.form['name'],
-						'mail': request.form['mail']
-						}
+	if request.json and 'name' in request.json: # Handler for request in JSON format
+		contact = {
+			'id'  : contacts[-1]['id'] + 1,
+			'name': request.json['name'],
+			'mail': request.json['mail']
+		}
+	else:                                                                # Handler for form based PUT Request
+		contact = {
+				'id'  : request.form['id'],
+				'name': request.form['name'],
+				'mail': request.form['mail']
+			}
 	contacts.append(contact)
 	return jsonify({'Contact': contact}), 201
+
+# PUT Request
+# To be completed
+
+# DELETE Request
+@app.route('/contacts/<int:id>', methods=['DELETE'])
+def delete_contact(id):
+	contact = [contact for contact in contacts if contact['id'] == id]
+	if len(contact) == 0:
+		abort(404)
+	contacts.remove(contact)
+	return jsonify({'Result': True})
 
 # Error Handler to convert Error 404 to JSON
 @app.errorhandler(404)
