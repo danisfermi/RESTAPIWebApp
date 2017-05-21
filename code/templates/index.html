@@ -8,32 +8,54 @@
 <body>
     <h1>REST API for Contacts App</h1>
     <h3>
-    GET REQUEST (to show all contacts)
+    GET REQUEST (to show all contacts) </h3>
     <form action='http://127.0.0.1:5000/contacts'>
     <input type="submit" value="SHOW ALL CONTACTS" />
     </form>
-    </h3>
     <h3>
-    GET REQUEST (to show a specific contact)
-    <form action='http://127.0.0.1:5000/contacts'>
+    GET REQUEST (to show a specific contact) </h3>
+    <form action='http://127.0.0.1:5000/contacts' method="get">
+    <div>
+    <label for="id">Contact ID: </label>
+    <input name="id" id="id" value="ID No. of the Contact">
+    </div> <br>
     <input type="submit" value="SHOW SPECIFIC CONTACTS" />
     </form>
-    </h3>
     <h3>
-    PUSH REQUEST (to create a contact)
-    <form action='http://127.0.0.1:5000/contacts'>
+    POST REQUEST (to create a contact) </h3>
+    <form action='http://127.0.0.1:5000/contacts' method="post">
+    <div>
+    <label for="name">Name: </label>
+    <input name="name" id="name" value="Your Name">
+    </div> <br>
+    <div>
+    <label for="mail">Mail: </label>
+    <input name="mail" id="mail" value="Your Mail">
+    </div> <br>
     <input type="submit" value="CREATE CONTACT" />
     </form>
     </h3>
     <h3>
-    PUT REQUEST (to update a contact)
-    <form action='http://127.0.0.1:5000/contacts'>
+    PUT REQUEST (to update a contact) </h3>
+    <form action='http://127.0.0.1:5000/contacts' method="put">
+    <div>
+    <label for="name">Name: </label>
+    <input name="name" id="name" value="Your Name">
+    </div> <br>
+    <div>
+    <label for="mail">Mail: </label>
+    <input name="mail" id="mail" value="Your Mail">
+    </div> <br>
     <input type="submit" value="UPDATE CONTACT" />
     </form>
     </h3>
     <h3>
-    DELETE REQUEST (to delete a contact)
-    <form action='http://127.0.0.1:5000/contacts'>
+    DELETE REQUEST (to delete a contact) </h3>
+    <form action='http://127.0.0.1:5000/contacts' method="delete">
+    <div>
+    <label for="id">Contact ID: </label>
+    <input name="id" id="id" value="ID No. of the Contact">
+    </div> <br>
     <input type="submit" value="DELETE CONTACT" />
     </form>
     </h3>

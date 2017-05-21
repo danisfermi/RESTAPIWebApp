@@ -4,13 +4,14 @@ from flask import jsonify
 from flask import request
 from flask import make_response
 from flask import abort
+from flask import render_template
 
 app = Flask(__name__)
 
 # Index
 @app.route('/')
 def index():
-	return "Hello World"
+	return render_template('index.html')
 
 # Base GET Request
 @app.route('/contacts', methods = ['GET'])
@@ -18,7 +19,7 @@ def get_contacts():
 	return jsonify({'Contacts': contacts})
 
 # Name Based Get Request
-@app.route('/contacts/<int:id>', methods = ['GET'])
+@app.route('/contacts?id=<int:id>', methods = ['GET'])
 def get_contact(id):
 	contact = [contact for contact in contacts if contact['id'] == id]
 	if len(contact) == 0:
@@ -55,7 +56,7 @@ def update_contact(id):
 	return jsonify({'Contact': contact[0]})
 
 # DELETE Request
-@app.route('/contacts/<int:id>', methods=['DELETE'])
+@app.route('/contacts?id=<int:id>', methods=['DELETE'])
 def delete_contact(id):
 	contact = [contact for contact in contacts if contact['id'] == id]
 	if len(contact) == 0:
