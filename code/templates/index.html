@@ -14,7 +14,7 @@
     </form>
     <h3>
     GET REQUEST (to show a specific contact) </h3>
-    <form action='http://127.0.0.1:5000/contacts' method="get">
+    <form action='http://127.0.0.1:5000/contact' method="get">
     <div>
     <label for="id">Contact ID: </label>
     <input name="id" id="id" value="ID No. of the Contact">
@@ -39,9 +39,13 @@
     PUT REQUEST (to update a contact) </h3>
     <form action='http://127.0.0.1:5000/contacts' method="put">
     <div>
+    <label for="id">Contact ID: </label>
+    <input name="id" id="id" value="ID No. of the Contact">
+    </div> <br>
     <label for="name">Name: </label>
     <input name="name" id="name" value="Your Name">
     </div> <br>
+    <br>
     <div>
     <label for="mail">Mail: </label>
     <input name="mail" id="mail" value="Your Mail">

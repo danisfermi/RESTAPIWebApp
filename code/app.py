@@ -19,8 +19,9 @@ def get_contacts():
 	return jsonify({'Contacts': contacts})
 
 # Name Based Get Request
-@app.route('/contacts?id=<int:id>', methods = ['GET'])
-def get_contact(id):
+@app.route('/contact', methods = ['GET'])
+def get_contact():
+	id = int(request.args.get('id'))
 	contact = [contact for contact in contacts if contact['id'] == id]
 	if len(contact) == 0:
 		abort(404)
@@ -45,7 +46,7 @@ def create_contact():
 	return jsonify({'Contact': contact}), 201
 
 # PUT Request
-@app.route('/contacts/<int:id>', methods=['PUT'])
+@app.route('/contacts/id=<int:id>', methods=['PUT'])
 def update_contact(id):
 	contact = [contact for contact in contacts if contact['id'] == id]
 	if len(contact) == 0:
@@ -56,7 +57,7 @@ def update_contact(id):
 	return jsonify({'Contact': contact[0]})
 
 # DELETE Request
-@app.route('/contacts?id=<int:id>', methods=['DELETE'])
+@app.route('/contacts/id=<int:id>', methods=['DELETE'])
 def delete_contact(id):
 	contact = [contact for contact in contacts if contact['id'] == id]
 	if len(contact) == 0:
