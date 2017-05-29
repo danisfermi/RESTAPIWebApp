@@ -22,6 +22,24 @@ while (cont=='yes' or cont=='Yes' or cont=='Y' or cont=='y' or cont=='YES'):
 		r = requests.get('http://127.0.0.1:5000/contact', params = payload)
 		print "Response from the server in JSON"
 		print r.json()
+	elif ch == '3':
+		id = raw_input("Enter the ID of the Record you wish to fetch: ")
+		payload = {'id':id}
+		r = requests.get('http://127.0.0.1:5000/contact', params = payload)
+		print "Response from the server in JSON"
+		print r.json()
+	elif ch == '4':
+		id = raw_input("Enter the ID of the Record you wish to fetch: ")
+		payload = {'id':id}
+		r = requests.get('http://127.0.0.1:5000/contact', params = payload)
+		print "Response from the server in JSON"
+		print r.json()
+	elif ch == '5':
+		id = raw_input("Enter the ID of the Record you wish to delete: ")
+		url = 'http://127.0.0.1:5000/contacts/'+id
+		r = requests.delete(url)
+		print "Response from the server in JSON"
+		print r.json()
 	else:
 		print "Please Enter Valid Choice"
 	cont = raw_input("Do you want to continue?: ")
