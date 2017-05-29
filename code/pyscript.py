@@ -25,17 +25,15 @@ while (cont=='yes' or cont=='Yes' or cont=='Y' or cont=='y' or cont=='YES'):
 	elif ch == '3':
 		name = raw_input("Enter the Name of the new Record: ")
 		mail = raw_input("Enter the Mail of the new Record: ")
-		payload = {'name':name ,'mail':mail}
-		r = requests.post('http://127.0.0.1:5000/contacts', params = payload)
+		r = requests.post('http://127.0.0.1:5000/contacts', data = {'name':name ,'mail':mail})
 		print "Response Status from Server"
 		print r.status_code
 	elif ch == '4':
 		id = raw_input("Enter the ID of the Record you wish to update: ")
 		name = raw_input("Enter the new Name of the Record. Else leave blank: ")
 		mail = raw_input("Enter the new Mail of the Record. Else leave blank: ")
-		payload = {'name':name ,'mail':mail}
 		url = 'http://127.0.0.1:5000/contacts/id='+id
-		r = requests.put(url, params = payload)
+		r = requests.put(url, data = {'name':name ,'mail':mail})
 		print "Response Status from Server"
 		print r.status_code
 	elif ch == '5':
