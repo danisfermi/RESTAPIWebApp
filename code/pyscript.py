@@ -1,5 +1,5 @@
 #!/usr/bin/python
-import urllib2
+import requests
 
 cont = 'Yes'
 while (cont=='yes' or cont=='Yes' or cont=='Y' or cont=='y' or cont=='YES'):
@@ -12,4 +12,10 @@ while (cont=='yes' or cont=='Yes' or cont=='Y' or cont=='y' or cont=='YES'):
 	print "4. PUT Request to update a record"
 	print "5. DELETE Request to delete a record"
 	ch = raw_input("Enter your choice: ")
-
+	if ch == '1':
+		r = requests.get('http://127.0.0.1:5000/contacts')
+		print "Response from the server in JSON"
+		print r.json()
+	else:
+		print "Please Enter Valid Choice"
+	cont = raw_input("Do you want to continue?: ")
