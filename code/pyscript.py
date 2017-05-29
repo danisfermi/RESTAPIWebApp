@@ -27,20 +27,23 @@ while (cont=='yes' or cont=='Yes' or cont=='Y' or cont=='y' or cont=='YES'):
 		mail = raw_input("Enter the Mail of the new Record: ")
 		payload = {'name':name ,'mail':mail}
 		r = requests.post('http://127.0.0.1:5000/contacts', params = payload)
-		print "Response from the server in JSON"
-		print r.json()
+		print "Response Status from Server"
+		print r.status_code
 	elif ch == '4':
 		id = raw_input("Enter the ID of the Record you wish to update: ")
-		url = 'http://127.0.0.1:5000/contacts/'+id
-		r = requests.put(url)
-		print "Response from the server in JSON"
-		print r.json()
+		name = raw_input("Enter the new Name of the Record. Else leave blank: ")
+		mail = raw_input("Enter the new Mail of the Record. Else leave blank: ")
+		payload = {'name':name ,'mail':mail}
+		url = 'http://127.0.0.1:5000/contacts/id='+id
+		r = requests.put(url, params = payload)
+		print "Response Status from Server"
+		print r.status_code
 	elif ch == '5':
 		id = raw_input("Enter the ID of the Record you wish to delete: ")
-		url = 'http://127.0.0.1:5000/contacts/'+id
+		url = 'http://127.0.0.1:5000/contacts/id='+id
 		r = requests.delete(url)
-		print "Response from the server in JSON"
-		print r.json()
+		print "Response Status from Server"
+		print r.status_code
 	else:
 		print "Please Enter Valid Choice"
 	cont = raw_input("Do you want to continue?: ")
