@@ -23,15 +23,16 @@ while (cont=='yes' or cont=='Yes' or cont=='Y' or cont=='y' or cont=='YES'):
 		print "Response from the server in JSON"
 		print r.json()
 	elif ch == '3':
-		id = raw_input("Enter the ID of the Record you wish to fetch: ")
-		payload = {'id':id}
-		r = requests.get('http://127.0.0.1:5000/contact', params = payload)
+		name = raw_input("Enter the Name of the new Record: ")
+		mail = raw_input("Enter the Mail of the new Record: ")
+		payload = {'name':name ,'mail':mail}
+		r = requests.post('http://127.0.0.1:5000/contacts', params = payload)
 		print "Response from the server in JSON"
 		print r.json()
 	elif ch == '4':
-		id = raw_input("Enter the ID of the Record you wish to fetch: ")
-		payload = {'id':id}
-		r = requests.get('http://127.0.0.1:5000/contact', params = payload)
+		id = raw_input("Enter the ID of the Record you wish to update: ")
+		url = 'http://127.0.0.1:5000/contacts/'+id
+		r = requests.put(url)
 		print "Response from the server in JSON"
 		print r.json()
 	elif ch == '5':
