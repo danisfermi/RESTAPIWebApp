@@ -59,23 +59,39 @@ log /dev/log        local1 notice
 ``` 
 With,
 `log         127.0.0.1 local2`
-Enable UDP syslog reception in ?/etc/rsyslog.conf? configuration file. Uncommnet ModLoad and UDPServerRun, Here our Server will listen to Port 514 to collect the logs into syslog.
+* Enable UDP syslog reception in ?/etc/rsyslog.conf? configuration file. Uncommnet ModLoad and UDPServerRun, Here our Server will listen to Port 514 to collect the logs into syslog.
 ```
 # Provides UDP syslog reception
 $ModLoad imudp
 $UDPServerRun 514
 ```
-Create a separate file ?haproxy.conf? under ?/etc/rsyslog.d/? directory to configure separate log files.
+* Create a separate file ?haproxy.conf? under ?/etc/rsyslog.d/? directory to configure separate log files.
 `local2.*	/var/log/haproxy.log`
-Restart the rsyslog service to update the new changes.
+* Restart the rsyslog service to update the new changes.
 `service rsyslog restart`
 
 ## Configuring HAProxy Global Settings
 
-Refer to [ldbalancer/HAProxy/config](ldbalancer/HAProxy/config)
-Restart the HAProxy and make it persistant at system startup.
+* Refer to [ldbalancer/HAProxy/config](ldbalancer/HAProxy/config)
+* Restart the HAProxy and make it persistant at system startup.
 `service haproxy restart`
-Set “ENABLED” option to “1” in ‘/etc/default/haproxy‘ file.
+* Set “ENABLED” option to “1” in ‘/etc/default/haproxy‘ file.
 `ENABLED=1`
 
 ## Configuring SSL
+
+* Enable SSL and restart Apache
+```
+a2enmod ssl
+service apache2 restart
+```
+* Navigate to SSL library and create certificates
+```
+cd /etc/ssl/
+openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/ssl/tecmint.key -out /etc/ssl/tecmint.crt
+cat tecmint.crt tecmint.key > tecmint.pem
+```
+* Make changes to [ldbalancer/HAProxy/config](ldbalancer/HAProxy/config). Check lines after the comment SSL under Frontend.
+* Restart HAProxy.
+`service haproxy restart`
+* Fix warning by making changes to [ldbalancer/HAProxy/config](ldbalancer/HAProxy/config). Check lines after the comment Warning Fix under Global.
