@@ -1,8 +1,11 @@
 ## HAProxy Server Setup
+
 OS: Ubuntu 14.04 LTS
 IP Address: 192.168.0.125
 Hostname: 
+
 ## Client Web Server Setup
+
 Web Server #1: Ubuntu 14.04 LTS [IP: 192.168.0.121] - [hostname: ]
 Web Server #2: Ubuntu 14.04 LTS [IP: 192.168.0.122] - [hostname: ]
 ## Installing Apache and Deploying Flask on Client Servers
@@ -39,9 +42,12 @@ Save and close the file.
 Enable Virtual Host using the command
 `a2ensite NuageWebApp`
 * Create Python file `app.wsgi` in our directory. The code in this file will import the main Flask application object and will be actually executed by the WSGI module of Apache. We are extending the Python classes path to include our own webapplication's folder.
+Refer to [code/app.wsgi](code/app.wsgi)
 * Restart Apache
 `service apache2 restart`
+
 ## Installing HAProxy Server
+
 * Download and install HAProxy
 `apt-get install haproxy`
 * Configure HAProxy Logs. Open the main HAProxy config file
@@ -63,4 +69,13 @@ Create a separate file ?haproxy.conf? under ?/etc/rsyslog.d/? directory to confi
 `local2.*	/var/log/haproxy.log`
 Restart the rsyslog service to update the new changes.
 `service rsyslog restart`
+
 ## Configuring HAProxy Global Settings
+
+Refer to [ldbalancer/HAProxy/config](ldbalancer/HAProxy/config)
+Restart the HAProxy and make it persistant at system startup.
+`service haproxy restart`
+Set “ENABLED” option to “1” in ‘/etc/default/haproxy‘ file.
+`ENABLED=1`
+
+## Configuring SSL
