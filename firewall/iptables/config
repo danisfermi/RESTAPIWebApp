@@ -1,4 +1,18 @@
-File Modified is  ‘/etc/iptables.up.rules‘. Added for HAProxy Functioning.
-A INPUT ­p tcp ­­dport 514 ­j ACCEPT 
-A INPUT ­p tcp ­­dport 80 ­j ACCEPT 
-A INPUT ­p tcp ­­dport 443 ­j ACCEPT 
+# File Modified is  ‘/etc/iptables.up.rules‘ of the HAProxy Server. Added for HAProxy Functioning.
+--------------------------------------------------------------------------------------------------
+A INPUT ­p tcp ­­dport 514 ­j ACCEPT
+A INPUT ­p tcp ­­dport 80 ­j ACCEPT
+A INPUT ­p tcp ­­dport 443 ­j ACCEPT
+
+# Terminal Commands to Configure IP Tables
+-------------------------------------------
+sudo /sbin/iptables-save # To save IP Tables config after reboot
+1. IP Tables Configuration in Load Balancer
+
+2. IP Tables Configuration in Web Servers
+iptables --policy INPUT REJECT
+iptables -A INPUT -s 192.168.0.125 -j ACCEPT
+3. IP Tables Configuration in Databases
+iptables --policy INPUT REJECT
+iptables -A INPUT -s 192.168.0.121 -j ACCEPT
+iptables -A INPUT -s 192.168.0.122 -j ACCEPT
