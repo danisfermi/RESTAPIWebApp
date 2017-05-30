@@ -1,0 +1,19 @@
+# Following Lines need to be Added to ‘/etc/haproxy/haproxy.cfg‘ 
+frontend LB
+	bind 192.168.0.125:80
+	reqadd X-Forwarded-Proto:\ http
+	default_backend LB
+backend LB 192.168.0.125:80
+	mode http
+	stats enable
+	stats hide-version
+	stats uri /stats
+	stats realm Haproxy\ Statistics
+	stats auth admin:admin			# Credentials for HAProxy Statistic report page.
+	balance roundrobin				# Load balancing will work in round-robin process.
+	option httpchk
+	option  httpclose
+	option forwardfor
+	cookie LB insert
+	server web1-srv 192.168.0.121:80 cookie web1-srv check		# backend server.
+	server web2-srv 192.168.0.122:80 cookie web2-srv check		# backend server.
