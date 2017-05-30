@@ -1,19 +1,67 @@
+# Following Lines exist in ‘/etc/haproxy/haproxy.cfg‘
+global
+    log /dev/log    local0
+    log /dev/log    local1 notice
+    chroot /var/lib/haproxy
+    stats socket /run/haproxy/admin.sock mode 660 level admin
+    stats timeout 30s
+    user haproxy
+    group haproxy
+    daemon
+    tune.ssl.default-dh-param 2048    # To remove warning generated after SSL configuration
+    # Default SSL material locations
+    ca-base /etc/ssl/certs
+    crt-base /etc/ssl/private
+
+    # Default ciphers to use on SSL-enabled listening sockets.
+    # For more information, see ciphers(1SSL).
+    ssl-default-bind-ciphers kEECDH+aRSA+AES:kRSA+AES:+AES256:RC4-SHA:!kEDH:!LOW:!EXP:!MD5:!aNULL:!eNULL
+defaults
+    log     global
+    mode    http
+    option  httplog
+    option  dontlognull
+    timeout connect 5000
+    timeout client  50000
+    timeout server  50000
+    errorfile 400 /etc/haproxy/errors/400.http
+    errorfile 403 /etc/haproxy/errors/403.http
+    errorfile 408 /etc/haproxy/errors/408.http
+    errorfile 500 /etc/haproxy/errors/500.http
+    errorfile 502 /etc/haproxy/errors/502.http
+    errorfile 503 /etc/haproxy/errors/503.http
+    errorfile 504 /etc/haproxy/errors/504.http
+# Changes to be made to defaults
+    option http-server-close
+    option forwardfor       except 127.0.0.0/8
+    option                  redispatch
+    retries                 3
+    timeout http-request    20
+    timeout queue           86400
+    timeout connect         86400    # Replace existing values
+    timeout client          86400    # Replace existing values
+    timeout server          86400    # Replace existing values
+    timeout http-keep-alive 30
+    timeout check           20
+    maxconn                 50000
 # Following Lines need to be Added to ‘/etc/haproxy/haproxy.cfg‘ 
 frontend LB
-	bind 192.168.0.125:80
-	reqadd X-Forwarded-Proto:\ http
-	default_backend LB
+    bind 192.168.0.125:80
+    reqadd X-Forwarded-Proto:\ http
+    default_backend LB
+    bind 192.168.0.125:443 ssl crt /etc/ssl/mykey.pem.       # SSL Configuration for Frontend
 backend LB 192.168.0.125:80
-	mode http
-	stats enable
-	stats hide-version
-	stats uri /stats
-	stats realm Haproxy\ Statistics
-	stats auth admin:admin			# Credentials for HAProxy Statistic report page.
-	balance roundrobin				# Load balancing will work in round-robin process.
-	option httpchk
-	option  httpclose
-	option forwardfor
-	cookie LB insert
-	server web1-srv 192.168.0.121:80 cookie web1-srv check		# backend server.
-	server web2-srv 192.168.0.122:80 cookie web2-srv check		# backend server.
+    mode http
+    stats enable
+    stats hide-version
+    stats uri /stats
+    stats realm Haproxy\ Statistics
+    stats auth admin:admin            # Credentials for HAProxy Statistic report page.
+    balance roundrobin                # Load balancing will work in round-robin process.
+    option httpchk
+    option  httpclose
+    option forwardfor
+    cookie LB insert
+    redirect scheme https if !{ ssl_fc }    # SSL Configuration for Backend
+    server web1-srv 192.168.0.121:80 cookie web1-srv check        # backend server.
+    server web2-srv 192.168.0.122:80 cookie web2-srv check        # backend server.

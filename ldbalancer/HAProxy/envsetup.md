@@ -88,8 +88,8 @@ service apache2 restart
 * Navigate to SSL library and create certificates
 ```
 cd /etc/ssl/
-openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/ssl/tecmint.key -out /etc/ssl/tecmint.crt
-cat tecmint.crt tecmint.key > tecmint.pem
+openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/ssl/mykey.key -out /etc/ssl/mykey.crt
+cat mykey.crt mykey.key > mykey.pem
 ```
 * Make changes to [ldbalancer/HAProxy/config](ldbalancer/HAProxy/config). Check lines after the comment SSL under Frontend.
 * Restart HAProxy.
