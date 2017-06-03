@@ -91,7 +91,10 @@ cd /etc/ssl/
 openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/ssl/mykey.key -out /etc/ssl/mykey.crt
 cat mykey.crt mykey.key > mykey.pem
 ```
-* Make changes to [ldbalancer/HAProxy/config](ldbalancer/HAProxy/config). Check lines after the comment SSL under Frontend.
+* Make changes to [ldbalancer/HAProxy/config](ldbalancer/HAProxy/config). Check lines after the comment SSL under Frontend/Backend.
 * Restart HAProxy.
 `service haproxy restart`
 * Fix warning by making changes to [ldbalancer/HAProxy/config](ldbalancer/HAProxy/config). Check lines after the comment Warning Fix under Global.
+
+## Enable Ports Rules on IP Tables
+* Make changes to [firewall/iptables/config](firewall/iptables/config) to allow required ports.
